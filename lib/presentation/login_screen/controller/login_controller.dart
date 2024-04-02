@@ -46,7 +46,6 @@ class LoginScreenController extends ChangeNotifier {
               AppConfig.LOGIN_DATA, jsonEncode(sharedData));
 
           print("*************${await AppUtils.getAccessKey()}");
-          print("**********${AppConfig.LOGIN_DATA}");
         }
 
         isLoading = false;

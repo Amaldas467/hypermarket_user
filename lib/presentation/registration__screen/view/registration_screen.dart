@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hypermarket_user/core/constants/color.dart';
 import 'package:hypermarket_user/presentation/login_screen/view/login_screen.dart';
 import 'package:hypermarket_user/presentation/registration__screen/controller/register_screen_controller.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -20,6 +21,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+
+  DateTime selectedDate = DateTime.now();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });
+    _dobController.text = _formatDate(selectedDate.toString());
+  }
 
   void _register() async {
     // SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -90,9 +107,25 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       hintText: 'Enter your email',
                     ),
                     SizedBox(height: 10),
-                    _buildTextField(
+                    TextFormField(
                       controller: _dobController,
-                      hintText: 'DOB',
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                            onPressed: () {
+                              _selectDate(context);
+                            },
+                            icon: Icon(Icons.date_range)),
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+                        border: OutlineInputBorder(),
+                        hintText: "DOB",
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter DOB';
+                        }
+                        return null;
+                      },
                     ),
                     SizedBox(height: 10),
                     DropdownButtonFormField(
@@ -202,5 +235,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         return null;
       },
     );
+  }
+
+  String _formatDate(String dateString) {
+    DateTime dateTime = DateTime.parse(dateString); // Parse the date string
+    String formattedDate = DateFormat('dd-MM-yyyy').format(dateTime);
+    // Dateformat('dd-MM-yyyy').format(dateTime); // Format the date
+    return formattedDate;
   }
 }

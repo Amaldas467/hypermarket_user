@@ -40,7 +40,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
     await Provider.of<scanedDetailsScreenController>(context, listen: false)
         .getProductDetailsScreenList(id: result);
     if (isLoading) {
-      Navigator.pushReplacement(
+      Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => ProductDetailsScreen(

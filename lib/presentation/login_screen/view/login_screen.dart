@@ -19,7 +19,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(AppConfig.USER_NAME);
     return Scaffold(
       appBar: AppBar(
         title: Text('Login Screen'),

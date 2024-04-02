@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hypermarket_user/app_config/app_config.dart';
 
 import 'package:hypermarket_user/core/constants/color.dart';
+import 'package:hypermarket_user/presentation/bottom_nav_screen/view/bottom_nav_screen.dart';
 
 import 'package:hypermarket_user/presentation/payment_screen/view/payment_screen.dart';
 import 'package:hypermarket_user/presentation/product_details_screen/controller/product_details_screen_controller.dart';
@@ -58,7 +59,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   children: [
                     InkWell(
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BottomNavScreen(),
+                            ));
                       },
                       child: CircleAvatar(
                         child: Icon(
