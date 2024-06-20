@@ -164,7 +164,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                           "Out of Stock",
                                           style: TextStyle(color: Colors.white),
                                         ))
-                                    : Text("$qty Available"),
+                                    : Text("$qty  Available in stock"),
                                 Row(
                                   children: [
                                     Icon(
@@ -173,7 +173,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     ),
                                     SizedBox(width: 10),
                                     Text(
-                                      "Fast Devivery Available",
+                                      "Offer ends Soon...",
                                       style: TextStyle(
                                         height: 1.7,
                                         fontSize: 12,
@@ -316,7 +316,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 5,
             ),
             InkWell(
               onTap: qty != 0

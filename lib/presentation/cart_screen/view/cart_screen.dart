@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hypermarket_user/core/constants/color.dart';
 import 'package:hypermarket_user/presentation/cart_screen/controller/cart_screen_controller.dart';
 import 'package:hypermarket_user/presentation/cart_screen/view/widgets/custom_cart_card.dart';
-import 'package:hypermarket_user/presentation/product_details_screen/view/product_details_screen.dart';
+//import 'package:hypermarket_user/presentation/product_details_screen/view/product_details_screen.dart';
 import 'package:provider/provider.dart';
 
 class CartScreen extends StatefulWidget {
@@ -121,6 +121,9 @@ class _CartScreenState extends State<CartScreen> {
                                   height: 10,
                                 )),
               ),
+            ),
+            SizedBox(
+              height: 30,
             ),
           ],
         ),

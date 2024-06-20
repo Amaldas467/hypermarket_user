@@ -40,27 +40,44 @@ class PopularItemcard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                qty,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              Row(
+                children: [
+                  Text(
+                    qty,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text("in stock")
+                ],
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Row(
+                children: [
+                  Text("Rs"),
+                  SizedBox(
+                    width: 3,
+                  ),
+                  Text(
+                    price,
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                  ),
+                ],
               ),
               SizedBox(
                 height: 5,
               ),
               Text(
-                price,
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Text(
-                "Free Devivery",
+                "Available now",
                 style: TextStyle(fontSize: 12),
               ),
             ],
           ),
-          Container(child: Image.network(AppConfig.mediaUrl + image))
+          Container(
+              width: 100, child: Image.network(AppConfig.mediaUrl + image))
         ],
       ),
     );

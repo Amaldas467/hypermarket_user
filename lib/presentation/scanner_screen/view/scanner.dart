@@ -81,7 +81,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        "Scan your Code",
+                        "Scan your QR",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,

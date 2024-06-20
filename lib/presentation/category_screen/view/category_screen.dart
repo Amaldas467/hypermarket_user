@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:hypermarket_user/app_config/app_config.dart';
 import 'package:hypermarket_user/core/constants/color.dart';
+import 'package:hypermarket_user/presentation/cart_screen/view/cart_screen.dart';
 import 'package:hypermarket_user/presentation/category_screen/controller/category_screen_controller.dart';
 import 'package:hypermarket_user/presentation/category_screen/view/widgets/popular_items_widgets.dart';
 import 'package:hypermarket_user/presentation/product_screen/view/product_List_screen.dart';
@@ -53,16 +54,42 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Hi Buddy!",
-                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Text(
+                              "Hi Buddy!",
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.white),
+                            ),
+                          ],
                         ),
-                        Text(
-                          "Welcome Back",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 30,
-                              color: Colors.white),
+                        Row(
+                          children: [
+                            Text(
+                              "Welcome Back",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 30,
+                                  color: Colors.white),
+                            ),
+                            SizedBox(
+                              width: 60,
+                            ),
+                            IconButton(
+                                onPressed: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CartScreen(),
+                                    )),
+                                icon: Icon(
+                                  Icons.shopping_cart,
+                                  color: Colors.white,
+                                  size: 25,
+                                ))
+                          ],
                         )
                       ],
                     ),
@@ -130,7 +157,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               Image.asset("assets/4.png"),
             ],
             options: CarouselOptions(
-                enlargeFactor: 5,
+                enlargeFactor: 4,
                 autoPlay: true,
                 viewportFraction: 1,
                 enlargeCenterPage: true),
@@ -146,7 +173,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "All your favorate",
+                        "Suggestions for you...",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 18),
                       ),
@@ -160,7 +187,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               ? SizedBox()
               : Container(
                   padding: EdgeInsets.symmetric(horizontal: 15),
-                  height: 120,
+                  height: 130,
                   child: Center(
                     child: ListView.separated(
                         scrollDirection: Axis.horizontal,
@@ -176,7 +203,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               index: index,
                             ),
                         separatorBuilder: (context, index) => SizedBox(
-                              width: 10,
+                              width: 15,
                             ),
                         itemCount: favorateProvider.favorateList.length),
                   ),
@@ -190,7 +217,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "You might need",
+                      " Categories",
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
@@ -209,7 +236,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             crossAxisCount: 3,
                             crossAxisSpacing: 15,
                             mainAxisSpacing: 15,
-                            mainAxisExtent: 180),
+                            mainAxisExtent: 140),
                         itemBuilder: (context, index) => InkWell(
                           onTap: () {
                             Navigator.push(

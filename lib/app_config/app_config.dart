@@ -1,8 +1,10 @@
 class AppConfig {
   //dev urls
-  static String devUrl = 'http://192.168.78.70:8000/api';
-  static String mediaUrl = 'http://192.168.78.70:8000/';
+  static String devUrl = 'http://10.0.2.2:8000/api';
+  static String mediaUrl = 'http://10.0.2.2:8000/';
 
+  //static String devUrl = 'http://192.168.153.243:8000/api';
+  //static String mediaUrl = 'http://192.168.153.243:8000/';
   // Final urls
   static String baseUrl = devUrl;
 

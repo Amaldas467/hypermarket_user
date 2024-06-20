@@ -33,10 +33,9 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 SizedBox(height: 20),
-                _buildTextField(
+                _buildMobileNumberTextField(
                   controller: _usernameController,
                   hintText: 'Mobile Number',
-                  isPassword: false,
                 ),
                 SizedBox(height: 20),
                 _buildTextField(
@@ -47,8 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: 30),
                 InkWell(
                   onTap: () async {
-                    if (_usernameController.text.isNotEmpty &&
-                        _passwordController.text.isNotEmpty) {
+                    if (_formKey.currentState!.validate()) {
                       await Provider.of<LoginScreenController>(context,
                               listen: false)
                           .onLogin(
@@ -66,17 +64,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         } else {
                           AppUtils.oneTimeSnackBar(
                               bgColor: Colors.red,
-                              "Enter a vaild user and pass",
+                              "Enter a valid user and password",
                               context: context);
                         }
                         _usernameController.clear();
                         _passwordController.clear();
                       });
-                    } else {
-                      AppUtils.oneTimeSnackBar(
-                          bgColor: Colors.red,
-                          "Enter valid user name or password",
-                          context: context);
                     }
                   },
                   child: Container(
@@ -145,6 +138,29 @@ class _LoginScreenState extends State<LoginScreen> {
       validator: (value) {
         if (value!.isEmpty) {
           return 'Please enter $hintText';
+        }
+        return null;
+      },
+    );
+  }
+
+  Widget _buildMobileNumberTextField(
+      {required TextEditingController controller, required String hintText}) {
+    return TextFormField(
+      controller: controller,
+      keyboardType: TextInputType.number,
+      maxLength: 10, // Set maximum length to 10 digits
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+        border: OutlineInputBorder(),
+        hintText: hintText,
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Please enter $hintText';
+        }
+        if (value.length != 10) {
+          return 'Mobile number should be 10 digits';
         }
         return null;
       },

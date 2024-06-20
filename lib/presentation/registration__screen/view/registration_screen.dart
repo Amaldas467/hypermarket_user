@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:hypermarket_user/core/constants/color.dart';
 import 'package:hypermarket_user/presentation/login_screen/view/login_screen.dart';
 import 'package:hypermarket_user/presentation/registration__screen/controller/register_screen_controller.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 class RegistrationScreen extends StatefulWidget {
   @override
@@ -18,7 +17,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
-
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
@@ -39,12 +37,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   void _register() async {
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-    // await prefs.setString('username', _nameController.text);
-    // await prefs.setString('password', _passwordController.text);
-    // print(
-    //     "8888888888888888888888888888888888888a${prefs.getString('username')}");
-
     await Provider.of<RegistrationScreenController>(context, listen: false)
         .onRegister(
       email: _emailController.text.trim(),
@@ -54,7 +46,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       dob: _dobController.text.trim(),
       gender: _gender,
     );
-    // You can add more data to store if needed
     Provider.of<RegistrationScreenController>(context, listen: false)
             .isPostLoading
         ? CircularProgressIndicator()
@@ -81,133 +72,138 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             child: Form(
               key: _formKey,
               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    SizedBox(
-                      height: 200,
-                      width: double.infinity,
-                      child: Image.asset(
-                        "assets/123.png",
-                        fit: BoxFit.fitWidth,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(
+                    height: 200,
+                    width: double.infinity,
+                    child: Image.asset(
+                      "assets/123.png",
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  _buildTextField(
+                    controller: _nameController,
+                    hintText: 'Enter your name',
+                  ),
+                  SizedBox(height: 10),
+                  _buildMobileNumberTextField(
+                    controller: _numberController,
+                    hintText: 'Enter your number',
+                  ),
+                  SizedBox(height: 10),
+                  _buildEmailTextField(
+                    controller: _emailController,
+                    hintText: 'Enter your email',
+                  ),
+                  SizedBox(height: 10),
+                  TextFormField(
+                    controller: _dobController,
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          _selectDate(context);
+                        },
+                        icon: Icon(Icons.date_range),
                       ),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+                      border: OutlineInputBorder(),
+                      hintText: "DOB",
                     ),
-                    SizedBox(height: 20),
-                    _buildTextField(
-                      controller: _nameController,
-                      hintText: 'Enter your name',
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter DOB';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 10),
+                  DropdownButtonFormField(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 0,
                     ),
-                    SizedBox(height: 10),
-                    _buildTextField(
-                      controller: _numberController,
-                      hintText: 'Enter your number',
+                    value: _gender,
+                    items: ['Male', 'Female', 'Other']
+                        .map((String value) => DropdownMenuItem(
+                              value: value,
+                              child: Text(value),
+                            ))
+                        .toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _gender = value!;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Select your gender',
                     ),
-                    SizedBox(height: 10),
-                    _buildTextField(
-                      controller: _emailController,
-                      hintText: 'Enter your email',
-                    ),
-                    SizedBox(height: 10),
-                    TextFormField(
-                      controller: _dobController,
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                            onPressed: () {
-                              _selectDate(context);
-                            },
-                            icon: Icon(Icons.date_range)),
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                        border: OutlineInputBorder(),
-                        hintText: "DOB",
+                  ),
+                  SizedBox(height: 10),
+                  _buildTextField(
+                    controller: _passwordController,
+                    hintText: 'Create password',
+                    isPassword: true,
+                  ),
+                  SizedBox(height: 10),
+                  _buildTextField(
+                    controller: _confirmPasswordController,
+                    hintText: 'Confirm password',
+                    isPassword: true,
+                  ),
+                  SizedBox(height: 30),
+                  InkWell(
+                    onTap: () {
+                      if (_formKey.currentState!.validate()) {
+                        _register();
+                      }
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 100, vertical: 15),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: ColorConstant.primaryGreen,
                       ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter DOB';
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: 10),
-                    DropdownButtonFormField(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 0,
-                      ),
-                      value: _gender,
-                      items: ['Male', 'Female', 'Other']
-                          .map((String value) => DropdownMenuItem(
-                                value: value,
-                                child: Text(value),
-                              ))
-                          .toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          _gender = value!;
-                        });
-                      },
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Select your gender',
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    _buildTextField(
-                      controller: _passwordController,
-                      hintText: 'Create password',
-                      isPassword: true,
-                    ),
-                    SizedBox(height: 10),
-                    _buildTextField(
-                      controller: _confirmPasswordController,
-                      hintText: 'Confirm password',
-                      isPassword: true,
-                    ),
-                    SizedBox(height: 30),
-                    InkWell(
-                      onTap: () {
-                        if (_formKey.currentState!.validate()) {
-                          _register();
-                        }
-                      },
-                      child: Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 100, vertical: 15),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: ColorConstant.primaryGreen),
-                        child: Center(
-                            child: Text(
+                      child: Center(
+                        child: Text(
                           'Register',
                           style: TextStyle(color: Colors.white),
-                        )),
+                        ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            "Already have an Account?",
-                            style: TextStyle(
-                                color: ColorConstant.hyperGrey,
-                                fontSize: 14,
-                                height: 1.5),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          "Already have an Account?",
+                          style: TextStyle(
+                            color: ColorConstant.hyperGrey,
+                            fontSize: 14,
+                            height: 1.5,
                           ),
-                          TextButton(
-                              onPressed: () {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => LoginScreen(),
-                                    ));
-                              },
-                              child: Text(
-                                "Log In",
-                              ))
-                        ],
-                      ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginScreen(),
+                              ),
+                            );
+                          },
+                          child: Text("Log In"),
+                        ),
+                      ],
                     ),
-                  ]),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -237,10 +233,68 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
+  Widget _buildMobileNumberTextField({
+    required TextEditingController controller,
+    required String hintText,
+  }) {
+    return TextFormField(
+      controller: controller,
+      keyboardType: TextInputType.number,
+      maxLength: 10, // Set maximum length to 10 digits
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+        border: OutlineInputBorder(),
+        hintText: hintText,
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Please enter $hintText';
+        }
+        if (value.length != 10) {
+          return 'Mobile number should be 10 digits';
+        }
+        if (!isNumeric(value)) {
+          return 'Please enter a valid $hintText';
+        }
+        return null;
+      },
+    );
+  }
+
+  Widget _buildEmailTextField({
+    required TextEditingController controller,
+    required String hintText,
+  }) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+        border: OutlineInputBorder(),
+        hintText: hintText,
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Please enter $hintText';
+        }
+        if (!value.contains('@') || !value.endsWith('.com')) {
+          return 'Invalid email format';
+        }
+        return null;
+      },
+    );
+  }
+
   String _formatDate(String dateString) {
-    DateTime dateTime = DateTime.parse(dateString); // Parse the date string
+    DateTime dateTime = DateTime.parse(dateString);
     String formattedDate = DateFormat('dd-MM-yyyy').format(dateTime);
-    // Dateformat('dd-MM-yyyy').format(dateTime); // Format the date
     return formattedDate;
+  }
+
+  // Function to check if a string contains only numbers
+  bool isNumeric(String? str) {
+    if (str == null) {
+      return false;
+    }
+    return double.tryParse(str) != null;
   }
 }
